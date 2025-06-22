@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/aiparser")
+@RequestMapping("/api/v1/aiparser")
 @RequiredArgsConstructor
 public class AIParserController {
 
