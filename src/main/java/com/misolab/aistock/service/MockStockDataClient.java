@@ -2,6 +2,8 @@ package com.misolab.aistock.service;
 
 import com.misolab.aistock.model.MarketIndex;
 import com.misolab.aistock.model.StockPrice;
+import com.misolab.aistock.model.PortfolioItem;
+import com.misolab.aistock.model.WatchlistItem;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -66,5 +68,45 @@ public class MockStockDataClient implements StockDataClient {
         return stockCodes.stream()
                 .map(this::getCurrentPrice)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PortfolioItem> getPortfolio(String analysisType) {
+        if ("profit_analysis".equalsIgnoreCase(analysisType)) {
+            return List.of(
+                    new PortfolioItem("삼성전자", "005930", 10, 70000, 75000, 50000, 7.14),
+                    new PortfolioItem("LG화학", "051910", 5, 400000, 450000, 250000, 12.5)
+            );
+        } else if ("loss_analysis".equalsIgnoreCase(analysisType)) {
+            return List.of(
+                    new PortfolioItem("카카오", "035720", 20, 55000, 48000, -140000, -12.73),
+                    new PortfolioItem("NAVER", "035420", 10, 220000, 190000, -300000, -13.64)
+            );
+        }
+        return List.of();
+    }
+
+    @Override
+    public List<MarketIndex> getMarketIndexes(List<String> indexTypes) {
+        // TODO: Implement mock data for market indexes
+        return List.of();
+    }
+
+    @Override
+    public List<WatchlistItem> getWatchlistRanking(String rankingType) {
+        if ("top_gainers".equalsIgnoreCase(rankingType)) {
+            return List.of(
+                    new WatchlistItem(1, "티에스이", "131290", 50000, 29.87),
+                    new WatchlistItem(2, "한미반도체", "042700", 150000, 15.38),
+                    new WatchlistItem(3, "ISC", "095340", 80000, 12.68)
+            );
+        } else if ("top_losers".equalsIgnoreCase(rankingType)) {
+            return List.of(
+                    new WatchlistItem(1, "에코프로", "086520", 500000, -8.54),
+                    new WatchlistItem(2, "엔켐", "348370", 300000, -7.69),
+                    new WatchlistItem(3, "알테오젠", "196170", 180000, -6.25)
+            );
+        }
+        return List.of();
     }
 } 
