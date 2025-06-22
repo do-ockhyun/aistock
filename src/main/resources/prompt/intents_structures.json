@@ -1,0 +1,102 @@
+{
+    "intents": {
+      "stock_price_inquiry": {
+        "description": "개별 종목의 현재 주가 및 변동 정보 조회",
+        "examples": [
+          "오늘 삼성전자 주식은 어때?",
+          "삼성전자 현재가 얼마야?",
+          "005930 오늘 얼마나 올랐어?",
+          "LG전자 주가 알려줘"
+        ],
+        "required_fields": ["stock_code", "stock_name"],
+        "optional_fields": ["date", "metrics", "comparison"],
+        "api_mapping": "/api/stocks/{stock_code}/price"
+      },
+      
+      "market_index_analysis": {
+        "description": "주요 지수(코스피, 코스닥) 변동 및 시장 이슈 분석",
+        "examples": [
+          "오늘 지수가 엄청 떨어졌던데, 무슨 일 있어?",
+          "코스피 왜 이렇게 떨어져?",
+          "오늘 코스닥 어때?",
+          "시장 상황이 어떤가?"
+        ],
+        "required_fields": ["index_type"],
+        "optional_fields": ["date", "analysis_depth"],
+        "api_mapping": "/api/market/index/{index_type}"
+      },
+  
+      "watchlist_ranking": {
+        "description": "사용자 관심종목에서 수익률/변동률 기준 랭킹 조회",
+        "examples": [
+          "오늘 관심종목 중에 상승률 높은 종목 3개 추려줘",
+          "내 관심종목에서 제일 많이 오른 거 알려줘",
+          "관심종목 중 하락률 높은 종목들 보여줘"
+        ],
+        "required_fields": ["ranking_type", "limit"],
+        "optional_fields": ["date", "sort_order"],
+        "api_mapping": "/api/user/watchlist/ranking",
+        "auth_required": true
+      },
+  
+      "portfolio_analysis": {
+        "description": "사용자 보유 종목(잔고)의 수익률 분석 및 손익 현황 조회",
+        "examples": [
+          "잔고에서 수익률이 안좋아서 손절해야할 종목 알려줘",
+          "내 포트폴리오에서 손실 나는 종목들 보여줘",
+          "보유 종목 중 수익률 좋은 거 알려줘"
+        ],
+        "required_fields": ["analysis_type"],
+        "optional_fields": ["limit", "threshold"],
+        "api_mapping": "/api/user/portfolio/analysis",
+        "auth_required": true
+      },
+  
+      "general_inquiry": {
+        "description": "주식/투자와 관련 없는 일반적인 질문",
+        "examples": [
+          "안녕하세요",
+          "날씨 어때?",
+          "점심 뭐 먹을까?"
+        ],
+        "required_fields": [],
+        "optional_fields": ["query"],
+        "api_mapping": "/api/chat/general"
+      }
+    },
+    
+    "stock_codes": {
+      "삼성전자": "005930",
+      "SK하이닉스": "000660", 
+      "LG전자": "066570",
+      "현대차": "005380",
+      "NAVER": "035420",
+      "카카오": "035720",
+      "삼성바이오로직스": "207940",
+      "LG화학": "051910",
+      "삼성SDI": "006400",
+      "기아": "000270"
+    },
+    
+    "index_types": {
+      "코스피": "KOSPI",
+      "코스닥": "KOSDAQ", 
+      "코스피200": "KS200",
+      "시장": "KOSPI"
+    },
+    
+    "ranking_types": {
+      "상승률": "return_rate_asc",
+      "하락률": "return_rate_desc", 
+      "거래량": "volume_desc",
+      "상승": "return_rate_asc",
+      "하락": "return_rate_desc"
+    },
+    
+    "analysis_types": {
+      "손실": "loss_analysis",
+      "수익": "profit_analysis", 
+      "손절": "loss_analysis",
+      "수익률": "return_analysis"
+    }
+  }

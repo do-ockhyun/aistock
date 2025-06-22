@@ -2,6 +2,7 @@ package com.misolab.aistock.api;
 
 import com.misolab.aistock.model.ParsedQuery;
 import com.misolab.aistock.service.AIParserService;
+import com.misolab.aistock.service.IntentHandlerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +17,15 @@ import java.util.Map;
 public class AIParserController {
 
     private final AIParserService aiParserService;
+    private final IntentHandlerService intentHandlerService;
 
     @PostMapping
-    public ParsedQuery parseQuery(@RequestBody Map<String, String> payload) {
+    public Object parseQuery(@RequestBody Map<String, String> payload) {
         String userQuery = payload.get("query");
         if (userQuery == null || userQuery.isBlank()) {
             throw new IllegalArgumentException("Query cannot be empty");
         }
-        return aiParserService.parseQuery(userQuery);
+        ParsedQuery parsedQuery = aiParserService.parseQuery(userQuery);
+        return intentHandlerService.processIntent(parsedQuery);
     }
 } 
