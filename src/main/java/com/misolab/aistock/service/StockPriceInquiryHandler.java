@@ -1,6 +1,8 @@
 package com.misolab.aistock.service;
 
+import com.misolab.aistock.model.IntentResponse;
 import com.misolab.aistock.model.ParsedQuery;
+import com.misolab.aistock.model.StockPrice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -9,6 +11,11 @@ import org.springframework.stereotype.Component;
 public class StockPriceInquiryHandler implements IntentHandler {
 
     private static final Logger log = LoggerFactory.getLogger(StockPriceInquiryHandler.class);
+    private final StockDataClient stockDataClient;
+
+    public StockPriceInquiryHandler(StockDataClient stockDataClient) {
+        this.stockDataClient = stockDataClient;
+    }
 
     @Override
     public boolean canHandle(String intent) {
@@ -16,9 +23,9 @@ public class StockPriceInquiryHandler implements IntentHandler {
     }
 
     @Override
-    public Object handle(ParsedQuery query) {
+    public IntentResponse handle(ParsedQuery query) {
         log.info("주가 조회 로직 호출: {}", query);
-        // TODO: Task 5에서 실제 주식 데이터를 조회하는 StockDataService를 호출해야 합니다.
-        return query; // 지금은 파싱된 쿼리를 그대로 반환합니다.
+        StockPrice stockPrice = stockDataClient.getCurrentPrice(query.getStockCode());
+        return new IntentResponse(query.getIntent(), stockPrice);
     }
 } 

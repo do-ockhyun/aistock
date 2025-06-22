@@ -1,5 +1,6 @@
 package com.misolab.aistock.service;
 
+import com.misolab.aistock.model.IntentResponse;
 import com.misolab.aistock.model.ParsedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public class IntentHandlerService {
 
     private final List<IntentHandler> handlers;
 
-    public Object processIntent(ParsedQuery query) {
+    public IntentResponse processIntent(ParsedQuery query) {
         return handlers.stream()
                 .filter(handler -> handler.canHandle(query.getIntent()))
                 .findFirst()

@@ -1,5 +1,6 @@
 package com.misolab.aistock.api;
 
+import com.misolab.aistock.model.IntentResponse;
 import com.misolab.aistock.model.ParsedQuery;
 import com.misolab.aistock.service.AIParserService;
 import com.misolab.aistock.service.IntentHandlerService;
@@ -20,7 +21,7 @@ public class AIParserController {
     private final IntentHandlerService intentHandlerService;
 
     @PostMapping
-    public Object parseQuery(@RequestBody Map<String, String> payload) {
+    public IntentResponse parseQuery(@RequestBody Map<String, String> payload) {
         String userQuery = payload.get("query");
         if (userQuery == null || userQuery.isBlank()) {
             throw new IllegalArgumentException("Query cannot be empty");
@@ -28,4 +29,4 @@ public class AIParserController {
         ParsedQuery parsedQuery = aiParserService.parseQuery(userQuery);
         return intentHandlerService.processIntent(parsedQuery);
     }
-} 
+}
