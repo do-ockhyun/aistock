@@ -4,6 +4,7 @@ import com.misolab.aistock.model.IntentResponse;
 import com.misolab.aistock.model.ParsedQuery;
 import com.misolab.aistock.service.AIParserService;
 import com.misolab.aistock.service.IntentHandlerService;
+import com.misolab.aistock.service.ResponseGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +20,18 @@ public class AIParserController {
 
     private final AIParserService aiParserService;
     private final IntentHandlerService intentHandlerService;
+    private final ResponseGeneratorService responseGeneratorService;
 
     @PostMapping
-    public IntentResponse parseQuery(@RequestBody Map<String, String> payload) {
+    public String parse(@RequestBody Map<String, String> payload) {
         String userQuery = payload.get("query");
-        if (userQuery == null || userQuery.isBlank()) {
-            throw new IllegalArgumentException("Query cannot be empty");
+        if (userQuery == null || userQuery.isEmpty()) {
+            return "Query is empty";
         }
+
         ParsedQuery parsedQuery = aiParserService.parseQuery(userQuery);
-        return intentHandlerService.processIntent(parsedQuery);
+        IntentResponse intentResponse = intentHandlerService.processIntent(parsedQuery);
+        
+        return responseGeneratorService.generateResponse(intentResponse, parsedQuery.getIntent());
     }
 }
