@@ -2,11 +2,12 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>StockGPT - 증권 AI 비서</title>
+    <title>mPOP AI - 증권 AI 비서</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 0; background-color: #f4f7f9; display: flex; justify-content: center; align-items: center; height: 100vh; }
         .chat-container { width: 100%; max-width: 600px; height: 80vh; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-        .chat-header { padding: 20px; background-color: #4a90e2; color: white; border-top-left-radius: 8px; border-top-right-radius: 8px; text-align: center; }
+        .chat-header { padding: 10px; background-color: #4a90e2; color: white; border-top-left-radius: 8px; border-top-right-radius: 8px; text-align: center; }
+        .chat-header h2 { margin: 0; font-size: 1.2em; }
         .chat-messages { flex-grow: 1; padding: 20px; overflow-y: auto; border-bottom: 1px solid #e0e0e0; border-top: 1px solid #e0e0e0; }
         .message { margin-bottom: 15px; display: flex; flex-direction: column; }
         .message.user { align-items: flex-end; }
@@ -25,13 +26,30 @@
         #send-button { background-color: #4a90e2; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; margin-left: 10px; cursor: pointer; font-size: 20px; line-height: 40px; text-align: center; }
         #send-button:hover { background-color: #357abd; }
         .typing-indicator { color: #999; font-style: italic; padding-left: 5px; display: none; }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                display: block; /* Remove flex centering */
+            }
+            .chat-container {
+                width: 100%;
+                height: 100vh; /* Full viewport height */
+                max-width: none;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .chat-header {
+                border-radius: 0;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
     <div class="chat-header">
-        <h2>StockGPT</h2>
+        <h2>mPOP AI</h2>
     </div>
     <div class="chat-messages" id="chat-messages">
         <!-- Messages will be appended here -->
