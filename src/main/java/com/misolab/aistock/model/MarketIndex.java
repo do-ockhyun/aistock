@@ -1,13 +1,14 @@
 package com.misolab.aistock.model;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
-public record MarketIndex(
-        String indexName,
-        BigDecimal value,
-        BigDecimal change,
-        BigDecimal changeRate,
-        LocalDateTime lastUpdated
-) {
-} 
+@Getter
+@Setter
+public class MarketIndex {
+    private String name;
+    private double value;
+    private double change;
+    private double changePercent;
+    private String description;
+}

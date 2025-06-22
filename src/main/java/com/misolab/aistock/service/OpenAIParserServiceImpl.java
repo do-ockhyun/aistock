@@ -67,7 +67,9 @@ public class OpenAIParserServiceImpl implements AIParserService {
             if (jsonResponse.endsWith("```")) {
                 jsonResponse = jsonResponse.substring(0, jsonResponse.length() - 3);
             }
-            return objectMapper.readValue(jsonResponse.trim(), ParsedQuery.class);
+            ParsedQuery parsedQuery = objectMapper.readValue(jsonResponse.trim(), ParsedQuery.class);
+            parsedQuery.setOriginalQuery(userQuery);
+            return parsedQuery;
         } catch (JsonProcessingException e) {
             // TODO: 정교한 예외 처리 필요
             throw new RuntimeException("Failed to parse AI response: " + content, e);

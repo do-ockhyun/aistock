@@ -12,6 +12,7 @@ import java.util.List;
 @ToString
 public class ParsedQuery {
 
+    private String originalQuery;
     private String intent;
 
     @JsonProperty("stock_code")

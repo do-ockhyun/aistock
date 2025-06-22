@@ -43,26 +43,21 @@ public class MockStockDataClient implements StockDataClient {
 
     @Override
     public MarketIndex getMarketIndex(String indexType) {
-        BigDecimal baseIndex = new BigDecimal("3000");
-        double indexFluctuation = (random.nextDouble() * 100) - 50;
-        BigDecimal currentIndex = baseIndex.add(new BigDecimal(indexFluctuation)).setScale(2, RoundingMode.HALF_UP);
-
-        double changeFluctuation = (random.nextDouble() * 60) - 30;
-        BigDecimal change = new BigDecimal(changeFluctuation).setScale(2, RoundingMode.HALF_UP);
-
-        BigDecimal previousIndex = currentIndex.subtract(change);
-        BigDecimal changePercent = BigDecimal.ZERO;
-        if (previousIndex.compareTo(BigDecimal.ZERO) != 0) {
-            changePercent = change.divide(previousIndex, 2, RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
+        MarketIndex index = new MarketIndex();
+        if ("KOSPI".equalsIgnoreCase(indexType)) {
+            index.setName("코스피");
+            index.setValue(2700.50);
+            index.setChange(-25.20);
+            index.setChangePercent(-0.92);
+            index.setDescription("외국인 및 기관의 동반 매도세에 하락 마감했습니다.");
+        } else if ("KOSDAQ".equalsIgnoreCase(indexType)) {
+            index.setName("코스닥");
+            index.setValue(850.15);
+            index.setChange(5.10);
+            index.setChangePercent(0.60);
+            index.setDescription("개인의 순매수세에 힘입어 상승 마감했습니다.");
         }
-
-        return new MarketIndex(
-                indexType,
-                currentIndex,
-                change,
-                changePercent.setScale(2, RoundingMode.HALF_UP),
-                LocalDateTime.now()
-        );
+        return index;
     }
 
     @Override
